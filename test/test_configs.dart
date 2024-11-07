@@ -23,3 +23,7 @@ const String lecturerPassword = "Password";
 const String className = "ICS2202_BICS2B";
 final DateTime lessonDatetime = DateTime(2024, 10, 30, 8, 15);
 final Time lessonDuration = Time(hours: 2);
+
+// QR Code details
+const String qrCode = "ICS2202_BICS2B 2024-10-30T08:15:00.000 1";
+final QRCodeData qrCodeData = QRCodeData(className, lessonDatetime, 1);
