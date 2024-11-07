@@ -41,7 +41,7 @@ create table classes (
 
 -- class details table
 create table ICS2202_BICS2B_details (
-  lesson_id int not null auto_increment,
+  lesson_id int not null,
   lesson_datetime datetime not null,
   duration time not null,
   primary key (lesson_id)
@@ -60,10 +60,12 @@ create table ICS2202_BICS2B_attendance (
 insert into students values (166335, 'Password');
 insert into lecturers values (123456, 'Password');
 insert into classes values ('ICS2202_BICS2B');
+insert into classes values ('ICS2203_BBIT2A');
 
 -- Add lessons to the class
-insert into ICS2202_BICS2B_details(lesson_datetime, duration) values ('2024-10-18 08:15:00', '02:00:00'),
-('2024-10-25 12:15:00', '02:00:00');
+insert into ICS2202_BICS2B_details values 
+  (1, '2024-10-18 08:15:00', '02:00:00'),
+  (2, '2024-10-25 12:15:00', '02:00:00');
 alter table ICS2202_BICS2B_attendance add lesson_2 bool not null default false;
 
 -- Add student to class
