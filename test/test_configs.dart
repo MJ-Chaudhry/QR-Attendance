@@ -14,6 +14,7 @@ const String dbName = "uni_db";
 // Student details for login tests.
 const int studentID = 166335;
 const String studentPassword = "Password";
+const int secondStudentID = 161122;
 
 // Lecturer details for login tests.
 const int lecturerID = 123456;

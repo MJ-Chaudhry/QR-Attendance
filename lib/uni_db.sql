@@ -55,9 +55,25 @@ create table ICS2202_BICS2B_attendance (
   foreign key (student_id) references students(id)
 );
 
+-- class details table
+create table ICS2203_BBIT2A_details (
+  lesson_id int not null,
+  lesson_datetime datetime not null,
+  duration time not null,
+  primary key (lesson_id)
+);
+
+-- class attendance table
+create table ICS2203_BBIT2A_attendance (
+  student_id int not null,
+  primary key (student_id),
+  foreign key (student_id) references students(id)
+);
+
 
 -- Setting up some default data/users for the tables.
 insert into students values (166335, 'Password');
+insert into students values (161122, 'Password');
 insert into lecturers values (123456, 'Password');
 insert into classes values ('ICS2202_BICS2B');
 insert into classes values ('ICS2203_BBIT2A');
@@ -70,9 +86,12 @@ alter table ICS2202_BICS2B_attendance add lesson_2 bool not null default false;
 
 -- Add student to class
 insert into ICS2202_BICS2B_attendance(student_id, lesson_1) values (166335, true);
+insert into ICS2203_BBIT2A_attendance(student_id) values (161122);
 
 select * from students;
 select * from lecturers;
 select * from classes;
 select * from ICS2202_BICS2B_details;
 select * from ICS2202_BICS2B_attendance;
+select * from ICS2203_BBIT2A_details;
+select * from ICS2203_BBIT2A_attendance;

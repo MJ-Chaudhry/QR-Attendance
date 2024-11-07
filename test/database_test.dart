@@ -159,18 +159,54 @@ the `uni_db.sql` file. If you want to re-run the test, make sure to recreate the
     });
   });
 
-  test("Mark attendance test", () async {
-    Database db = Database();
+  group("Test if student belongs to a class", () {
+    test("Valid student test", () async {
+      Database db = Database();
 
-    await db.getConnection(host, port, user, password, dbName);
+      await db.getConnection(host, port, user, password, dbName);
 
-    await db.markAttendance(studentID, className, 2);
+      bool valid = await db.studentInClass(studentID, className);
 
-    Results results = await db.conn!.query(
-        "select lesson_2 from ${className}_attendance where student_id = $studentID;");
+      expect(valid, true);
+    });
 
-    for (ResultRow row in results) {
-      expect(row[0], 1);
-    }
+    test("Invalid student test", () async {
+      Database db = Database();
+
+      await db.getConnection(host, port, user, password, dbName);
+
+      bool valid = await db.studentInClass(secondStudentID, className);
+
+      expect(valid, false);
+    });
+  });
+
+  group("Mark attendance tests", () {
+    test("Mark attendance test", () async {
+      Database db = Database();
+
+      await db.getConnection(host, port, user, password, dbName);
+
+      bool success = await db.markAttendance(studentID, className, 2);
+
+      expect(success, true);
+
+      Results results = await db.conn!.query(
+          "select lesson_2 from ${className}_attendance where student_id = $studentID;");
+
+      for (ResultRow row in results) {
+        expect(row[0], 1);
+      }
+    });
+
+    test("Invalid student in class", () async {
+      Database db = Database();
+
+      await db.getConnection(host, port, user, password, dbName);
+
+      bool success = await db.markAttendance(secondStudentID, className, 2);
+
+      expect(success, false);
+    });
   });
 }

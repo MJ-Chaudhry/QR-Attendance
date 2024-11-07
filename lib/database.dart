@@ -104,14 +104,33 @@ class Database {
     return lessonID;
   }
 
+  /// Validates whether a student is in a class or not.
+  Future<bool> studentInClass(int studentID, String className) async {
+    Results results = await conn!.query(
+        "select student_id from ${className}_attendance where student_id = ?;",
+        [studentID]);
+
+    if (results.isEmpty) return false;
+
+    return true;
+  }
+
   /// Sign attendance for a student.
   ///
-  /// This function assumes that the studentID, className, and lessonID are all
+  /// This function assumes that the className, lessonDatetime, and lessonID are all
   /// validated from the QR code. Before running this function for security reasons,
   /// make sure to validate the QR code data using the QR code class.
-  Future<void> markAttendance(
+  ///
+  /// The studentID is also checked to make sure the student belongs to the class.
+  ///
+  /// Return `true` on success and `false` on an error.
+  Future<bool> markAttendance(
       int studentID, String className, int lessonID) async {
+    if (!await studentInClass(studentID, className)) return false;
+
     await conn!.query(
         "update ${className}_attendance set lesson_$lessonID = 1 where student_id = $studentID;");
+        
+    return true;
   }
 }
