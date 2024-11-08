@@ -4,6 +4,10 @@ import 'package:qr_attendance/utils.dart';
 class Database {
   Database._privateConstructor();
 
+  static const String user = "jchau";
+  static const String password = "Primus_17";
+  static const String db = "uni_db";
+
   ConnectionSettings? settings;
   MySqlConnection? conn;
 
@@ -130,7 +134,7 @@ class Database {
 
     await conn!.query(
         "update ${className}_attendance set lesson_$lessonID = 1 where student_id = $studentID;");
-        
+
     return true;
   }
 }
